@@ -1,0 +1,9 @@
+extends ../base.pug
+
+block title
+  | LinkedList 
+
+block content
+  h1 See Our Users:
+  each user in users
+    a(href=`/users/${user.id}`) @#{user.username}
