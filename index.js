@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
 
+let userRouters = require('./routers/users')
+
 // database config
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
@@ -16,6 +18,8 @@ mongoose
     .catch(err => {
         console.log(err);
     })
+
+app.use('/users', userRouters);
 
 app.listen(PORT, () => {
     console.log(`LinkedList API is listening on port ${PORT}`);
