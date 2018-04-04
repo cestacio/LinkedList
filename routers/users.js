@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const { users } = require('../handlers');
+const { usersHandler } = require('../handlers');
 
 router
     .route('')
-    .get(users.readUsers)
-    .post(users.createUser);
+    .get(usersHandler.readUsers)
+    .post(usersHandler.createUser);
 
 router
     .route('/:userId')
-    .get(users.readUser)
-    .patch(users.updateUser)
-    .delete(users.deleteUser);
+    .get(usersHandler.readUser)
+    .patch(usersHandler.updateUser)
+    .delete(usersHandler.deleteUser);
 
 module.exports = router;

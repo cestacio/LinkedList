@@ -15,7 +15,7 @@ function readUsers(req, res, next) {
 
 function readUser(req, res, next) {
     return User.findById(req.params.userId)
-        .populate('pets')
+        .populate('users')
         .exec()
         .then(user => {
             if (!user) {
