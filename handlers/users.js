@@ -37,10 +37,14 @@ function readUser(req, res, next) {
 
 function updateUser(req, res, next) {
     return User.findOneAndUpdate({
-        username: req.params.username
-    }, req.body, {
-        new: true
-    }).then(user => res.json(user));
+            username: req.params.username
+        }, req.body, {
+            new: true
+        })
+        .then(user => res.json(user))
+        .catch(err => {
+            return res.json(err)
+        });
 }
 
 function deleteUser(req, res, next) {

@@ -12,6 +12,6 @@ router
     .route('/:username')
     .get(usersHandler.readUser)
     .patch(usersHandler.updateUser) // 2
-    .delete(usersHandler.deleteUser); // 3
+    .delete(usersHandler.deleteUser);
 
 module.exports = router;
