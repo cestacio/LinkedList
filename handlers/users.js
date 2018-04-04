@@ -3,8 +3,11 @@ const { User } = require('../models');
 function createUser(req, res, next) {
     const newUser = new User(req.body);
     newUser.save().then(user => {
-        return res.status(201).json(user);
-    });
+            return res.status(201).json(user);
+        })
+        .catch(err => {
+            return res.json(err);
+        });
 }
 
 function readUsers(req, res, next) {
@@ -14,14 +17,16 @@ function readUsers(req, res, next) {
 }
 
 function readUser(req, res, next) {
-    return User.findById(req.params.userId)
+    return User.findOne({
+            username: req.params.username
+        })
         .populate('users')
         .exec()
         .then(user => {
             if (!user) {
                 return res
                     .status(404)
-                    .json({ message: `User ${req.params.userId} not found.` });
+                    .json({ message: `User ${req.params.username} not found.` });
             }
             return res.json(user);
         })
@@ -31,13 +36,17 @@ function readUser(req, res, next) {
 }
 
 function updateUser(req, res, next) {
-    return User.findByIdAndUpdate(req.params.userId, req.body, {
+    return User.findOneAndUpdate({
+        username: req.params.username
+    }, req.body, {
         new: true
     }).then(user => res.json(user));
 }
 
 function deleteUser(req, res, next) {
-    return User.findByIdAndRemove(req.params.userId).then(() => {
+    return User.findOneAndRemove({
+        username: req.params.username
+    }).then(() => {
         return res.json({ message: 'User successfully deleted' });
     });
 }

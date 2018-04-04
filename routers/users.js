@@ -9,9 +9,9 @@ router
     .post(usersHandler.createUser);
 
 router
-    .route('/:userId')
+    .route('/:username')
     .get(usersHandler.readUser)
-    .patch(usersHandler.updateUser)
-    .delete(usersHandler.deleteUser);
+    .patch(usersHandler.updateUser) // 2
+    .delete(usersHandler.deleteUser); // 3
 
 module.exports = router;

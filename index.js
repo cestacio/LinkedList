@@ -13,12 +13,13 @@ mongoose.Promise = Promise;
 mongoose
     .connect('mongodb://localhost/linkedlist')
     .then(() => {
-        console.log('Successfully connect to database!');
+        console.log('Successfully connected to the database!');
     })
     .catch(err => {
         console.log(err);
     })
 
+app.use(bodyParser.json());
 app.use('/users', userRouters);
 
 app.listen(PORT, () => {
