@@ -1,17 +1,44 @@
 const mongoose = require('mongoose');
+const Company = require('./company');
 
 const userSchema = new mongoose.Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
+    firstName: {
+        type: String,
+        minLength: 1,
+        maxLength: 55,
+        required: true
+    },
+    lastName: {
+        type: String,
+        minLength: 1,
+        maxLength: 55,
+        required: true
+    },
+    username: {
+        type: String,
+        minLength: 1,
+        maxLength: 55,
+        required: true,
+        immutable: true
+    },
+    email: {
+        type: String,
+        minLength: 1,
+        maxLength: 55,
+        required: true
+    },
+    password: {
+        type: String,
+        minLength: 1,
+        maxLength: 55,
+        required: true
+    },
     currentCompany: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Company'
     },
     photo: String,
-    experience: {
+    experience: [{
         jobTitle: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Job'
@@ -22,12 +49,12 @@ const userSchema = new mongoose.Schema({
         },
         startDate: Date, // ISO date-format timestamp
         endDate: Date // ISO date-format timestamp
-    },
-    education: {
+    }],
+    education: [{
         institution: String,
         degree: String,
         endDate: Date // ISO date-format timestamp
-    },
+    }],
     skills: String
 });
 
@@ -48,9 +75,16 @@ userSchema.statics = {
 };
 
 userSchema.post('findOneAndUpdate', user => {
-    User.findOneAndUpdate(user, { $pul })
+    Company.findOneAndUpdate(user.company, { $addToSet: { users: user._id } }).then(() => {
+        console.log('POST HOOK RAN');
+    });
+});
 
-})
+userSchema.post('findOneAndRemove', user => {
+    Company.findOneAndUpdate(user.company, { $pull: { users: user._id } }).then(() => {
+        console.log('POST HOOK RAN');
+    });
+});
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
