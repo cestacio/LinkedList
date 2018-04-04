@@ -1,19 +1,17 @@
 const express = require('express');
-const { User } = require('../models');
 const router = express.Router();
 
-// all users at /users
+const { users } = require('../handlers');
+
 router
     .route('')
-    .get((req, res, next) => {
-        return User.find().then(user => {
-            return res.render('users/index', { users });
-        });
-    })
-    .post((req, res, next) => {
-        return User.create(req, body).then(user => {
-            return res.redirect('users/index');
-        });
-    });
+    .get(users.readUsers)
+    .post(users.createUser);
 
-// create a new user form
+router
+    .route('/:userId')
+    .get(users.readUser)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
+
+module.exports = router;
