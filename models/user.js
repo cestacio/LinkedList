@@ -70,7 +70,7 @@ userSchema.statics = {
     }
 };
 
-userSchema.post('findOneAndUpdate', user => {
+userSchema.post('findOneAndModify', user => {
     Company.findOneAndUpdate(user.company, { $addToSet: { users: user._id } }).then(() => {
         console.log('POST HOOK RAN');
     });

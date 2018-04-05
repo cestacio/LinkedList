@@ -1,0 +1,80 @@
+{
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "_id": {
+            "$id": "/properties/_id",
+            "type": "string",
+            "title": "The _id Schema ",
+            "default": "",
+            "examples": [
+                "5ac580a06c0eee26ef279ecd"
+            ]
+        },
+        "title": {
+            "$id": "/properties/title",
+            "type": "string",
+            "title": "The Title Schema ",
+            "default": "",
+            "examples": [
+                "Junior Software Engineer"
+            ]
+        },
+        "company": {
+            "$id": "/properties/company",
+            "type": "string",
+            "title": "The Company Schema ",
+            "default": "",
+            "examples": [
+                "5ac57232de80c72a4ad86ad4"
+            ]
+        },
+        "salary": {
+            "$id": "/properties/salary",
+            "type": "integer",
+            "title": "The Salary Schema ",
+            "default": 0,
+            "examples": [
+                105000
+            ]
+        },
+        "equity": {
+            "$id": "/properties/equity",
+            "type": "number",
+            "title": "The Equity Schema ",
+            "default": 0,
+            "examples": [
+                0.5
+            ]
+        },
+        "createdAt": {
+            "$id": "/properties/createdAt",
+            "type": "string",
+            "title": "The Createdat Schema ",
+            "default": "",
+            "examples": [
+                "2018-04-05T01:49:20.362Z"
+            ]
+        },
+        "updatedAt": {
+            "$id": "/properties/updatedAt",
+            "type": "string",
+            "title": "The Updatedat Schema ",
+            "default": "",
+            "examples": [
+                "2018-04-05T01:49:20.362Z"
+            ]
+        },
+        "__v": {
+            "$id": "/properties/__v",
+            "type": "integer",
+            "title": "The __v Schema ",
+            "default": 0,
+            "examples": [
+                0
+            ]
+        }
+    }
+}

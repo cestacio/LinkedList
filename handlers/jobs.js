@@ -49,6 +49,11 @@ function readJob(req, res, next) {
 }
 
 function updateJob(req, res, next) {
+    const result = v.validate(req.body, jobSchema);
+    if (!result.valid) {
+        const errors = result.errors.map(e => e.message).join(', ');
+        return next({ message: errors });
+    }
     return Job.findOneAndUpdate({
             jobId: req.params.id
         }, req.body, {
