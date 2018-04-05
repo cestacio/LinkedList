@@ -39,14 +39,8 @@ const userSchema = new mongoose.Schema({
     },
     photo: String,
     experience: [{
-        jobTitle: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Job'
-        },
-        company: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Company'
-        },
+        jobTitle: String,
+        company: String,
         startDate: Date, // ISO date-format timestamp
         endDate: Date // ISO date-format timestamp
     }],
