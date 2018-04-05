@@ -55,9 +55,7 @@ function updateUser(req, res, next) {
             new: true
         })
         .then(user => res.json({ data: user }))
-        .catch(err => {
-            return res.json(err)
-        });
+        .catch(err => next(err));
 }
 
 function deleteUser(req, res, next) {
