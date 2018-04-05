@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const Validator = require('jsonschema').Validator;
 const v = new Validator();
-const { newUserSchema } = require('../schemas');
+const { userSchema } = require('../schemas');
 
 // function createUser(req, res, next) {
 //     const newUser = new User(req.body);
@@ -14,10 +14,10 @@ const { newUserSchema } = require('../schemas');
 // }
 
 function createUser(req, res, next) {
-    const result = v.validate(req.body, newUserSchema);
+    const result = v.validate(req.body, userSchema);
     if (!result.valid) {
         const errors = result.errors.map(e => e.message).join(', ');
-        return new({ message: errors });
+        return next({ message: errors });
     }
     return User.createUser(new User(req.body))
         .then(user => res.json({ data: user })).catch(err => next(err));
