@@ -12,7 +12,7 @@ function createUser(req, res, next) {
 
 function readUsers(req, res, next) {
     return User.find().then(users => {
-        return res.json(users);
+        return res.json({ data: users });
     });
 }
 
@@ -28,7 +28,7 @@ function readUser(req, res, next) {
                     .status(404)
                     .json({ message: `User ${req.params.username} not found.` });
             }
-            return res.json(user);
+            return res.json({ data: user });
         })
         .catch(err => {
             return res.json(err);
@@ -41,7 +41,7 @@ function updateUser(req, res, next) {
         }, req.body, {
             new: true
         })
-        .then(user => res.json(user))
+        .then(user => res.json({ data: user }))
         .catch(err => {
             return res.json(err)
         });

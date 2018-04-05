@@ -56,6 +56,8 @@ const userSchema = new mongoose.Schema({
         endDate: Date // ISO date-format timestamp
     }],
     skills: String
+}, {
+    timestamps: true
 });
 
 userSchema.statics = {

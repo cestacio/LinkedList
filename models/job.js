@@ -8,6 +8,8 @@ const jobSchema = new mongoose.Schema({
     },
     salary: Number,
     equity: Number // this is a float
+}, {
+    timestamps: true
 });
 
 const Job = mongoose.model('Job', jobSchema);

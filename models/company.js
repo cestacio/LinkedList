@@ -26,7 +26,9 @@ const companySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Job'
     }]
-})
+}, {
+    timestamps: true
+});
 
 const Company = mongoose.model('Company', companySchema);
 module.exports = Company;

@@ -12,7 +12,7 @@ function createCompany(req, res, next) {
 
 function readCompanies(req, res, next) {
     return Company.find().then(companies => {
-        return res.json(companies);
+        return res.json({ data: companies });
     });
 }
 
@@ -28,7 +28,7 @@ function readCompany(req, res, next) {
                     .status(404)
                     .json({ message: `Company ${req.params.handle} not found.` });
             }
-            return res.json(company);
+            return res.json({ data: company });
         })
         .catch(err => {
             return res.json(err);
@@ -41,7 +41,7 @@ function updateCompany(req, res, next) {
         }, req.body, {
             new: true
         })
-        .then(company => res.json(company))
+        .then(company => res.json({ data: company }))
         .catch(err => {
             return res.json(err)
         });
