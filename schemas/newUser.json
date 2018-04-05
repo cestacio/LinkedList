@@ -1,0 +1,112 @@
+{
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "experience": {
+            "$id": "/properties/experience",
+            "type": "array",
+            "items": {
+                "$id": "/properties/experience/items",
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "$id": "/properties/experience/items/properties/_id",
+                        "type": "string",
+                        "title": "The _id Schema ",
+                        "default": "",
+                        "examples": [
+                            "5ac58eb64948d82a84d4b311"
+                        ]
+                    },
+                    "jobTitle": {
+                        "$id": "/properties/experience/items/properties/jobTitle",
+                        "type": "string",
+                        "title": "The Jobtitle Schema ",
+                        "default": "",
+                        "examples": [
+                            "Software Engineer Intern"
+                        ]
+                    },
+                    "company": {
+                        "$id": "/properties/experience/items/properties/company",
+                        "type": "string",
+                        "title": "The Company Schema ",
+                        "default": "",
+                        "examples": [
+                            "Google"
+                        ]
+                    }
+                }
+            }
+        },
+        "education": {
+            "$id": "/properties/education",
+            "type": "array"
+        },
+        "_id": {
+            "$id": "/properties/_id",
+            "type": "string",
+            "title": "The _id Schema ",
+            "default": "",
+            "examples": [
+                "5ac425f64ca5eb8f2c907b18"
+            ]
+        },
+        "firstName": {
+            "$id": "/properties/firstName",
+            "type": "string",
+            "title": "The Firstname Schema ",
+            "default": "",
+            "examples": [
+                "Charmaine"
+            ]
+        },
+        "lastName": {
+            "$id": "/properties/lastName",
+            "type": "string",
+            "title": "The Lastname Schema ",
+            "default": "",
+            "examples": [
+                "Estacio"
+            ]
+        },
+        "username": {
+            "$id": "/properties/username",
+            "type": "string",
+            "title": "The Username Schema ",
+            "default": "",
+            "examples": [
+                "cestacio"
+            ]
+        },
+        "email": {
+            "$id": "/properties/email",
+            "type": "string",
+            "title": "The Email Schema ",
+            "default": "",
+            "examples": [
+                "test@123test.com"
+            ]
+        },
+        "password": {
+            "$id": "/properties/password",
+            "type": "string",
+            "title": "The Password Schema ",
+            "default": "",
+            "examples": [
+                "1234567"
+            ]
+        },
+        "updatedAt": {
+            "$id": "/properties/updatedAt",
+            "type": "string",
+            "title": "The Updatedat Schema ",
+            "default": "",
+            "examples": [
+                "2018-04-05T02:49:26.595Z"
+            ]
+        }
+    }
+}

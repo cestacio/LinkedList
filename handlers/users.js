@@ -1,13 +1,26 @@
 const { User } = require('../models');
+const Validator = require('jsonschema').Validator;
+const v = new Validator();
+const { newUserSchema } = require('../schemas');
+
+// function createUser(req, res, next) {
+//     const newUser = new User(req.body);
+//     newUser.save().then(user => {
+//             return res.status(201).json(user);
+//         })
+//         .catch(err => {
+//             return res.json(err);
+//         });
+// }
 
 function createUser(req, res, next) {
-    const newUser = new User(req.body);
-    newUser.save().then(user => {
-            return res.status(201).json(user);
-        })
-        .catch(err => {
-            return res.json(err);
-        });
+    const result = v.validate(req.body, newUserSchema);
+    if (!result.valid) {
+        const errors = result.errors.map(e => e.message).join(', ');
+        return new({ message: errors });
+    }
+    return User.createUser(new User(req.body))
+        .then(user => res.json({ data: user })).catch(err => next(err));
 }
 
 function readUsers(req, res, next) {
