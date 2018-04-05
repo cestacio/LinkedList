@@ -7,6 +7,7 @@ const PORT = 3000;
 
 let userRouters = require('./routers/users');
 let companyRouters = require('./routers/companies');
+let jobRouters = require('./routers/jobs');
 
 // database config
 mongoose.set('debug', true);
@@ -23,6 +24,7 @@ mongoose
 app.use(bodyParser.json());
 app.use('/users', userRouters);
 app.use('/companies', companyRouters);
+app.use('/jobs', jobRouters);
 
 app.listen(PORT, () => {
     console.log(`LinkedList API is listening on port ${PORT}`);
