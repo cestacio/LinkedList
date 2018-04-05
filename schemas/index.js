@@ -1,3 +1,3 @@
-exports.newUserSchema = require('./user');
-// exports.newJobSchema = require('./newJob');
-// exports.newCompanySchema = require('./newCompany');
+exports.userSchema = require('./user');
+// exports.jobSchema = require('./job');
+exports.companySchema = require('./company');

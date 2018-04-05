@@ -47,7 +47,7 @@ companySchema.statics = {
     }
 };
 
-companySchema.post('findOneAndUpdate', company => {
+companySchema.post('findOneAndModify', company => {
     User.findOneAndUpdate(company.user, { $addToSet: { companies: company._id } }).then(() => {
         console.log('POST HOOK RAN');
     });

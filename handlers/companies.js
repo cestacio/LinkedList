@@ -1,19 +1,32 @@
 const { Company } = require('../models');
+const Validator = require('jsonschema').Validator;
+const v = new Validator();
+const { companySchema } = require('../schemas');
+
+// function createCompany(req, res, next) {
+//     const newCompany = new Company(req.body);
+//     newCompany.save().then(company => {
+//             return res.status(201).json(company);
+//         })
+//         .catch(err => {
+//             return res.json(err);
+//         });
+// }
 
 function createCompany(req, res, next) {
-    const newCompany = new Company(req.body);
-    newCompany.save().then(company => {
-            return res.status(201).json(company);
-        })
-        .catch(err => {
-            return res.json(err);
-        });
+    const result = v.validate(req.body, companySchema);
+    if (!result.valid) {
+        const errors = result.errors.map(e => e.message).join(', ');
+        return next({ message: errors });
+    }
+    return Company.createCompany(new Company(req.body))
+        .then(company => res.json({ data: company })).catch(err => next(err));
 }
 
 function readCompanies(req, res, next) {
     return Company.find().then(companies => {
         return res.json({ data: companies });
-    });
+    }).catch(err => next(err));
 }
 
 function readCompany(req, res, next) {
@@ -36,6 +49,11 @@ function readCompany(req, res, next) {
 }
 
 function updateCompany(req, res, next) {
+    const result = v.validate(req.body, companySchema);
+    if (!result.valid) {
+        const errors = result.errors.map(e => e.message).join(', ');
+        return next({ message: errors });
+    }
     return Company.findOneAndUpdate({
             handle: req.params.handle
         }, req.body, {
