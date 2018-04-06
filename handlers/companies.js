@@ -3,16 +3,6 @@ const Validator = require('jsonschema').Validator;
 const v = new Validator();
 const { companySchema } = require('../schemas');
 
-// function createCompany(req, res, next) {
-//     const newCompany = new Company(req.body);
-//     newCompany.save().then(company => {
-//             return res.status(201).json(company);
-//         })
-//         .catch(err => {
-//             return res.json(err);
-//         });
-// }
-
 function createCompany(req, res, next) {
     const result = v.validate(req.body, companySchema);
     if (!result.valid) {

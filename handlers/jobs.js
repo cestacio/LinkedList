@@ -3,16 +3,6 @@ const Validator = require('jsonschema').Validator;
 const v = new Validator();
 const { jobSchema } = require('../schemas');
 
-// function createJob(req, res, next) {
-//     const newJob = new Job(req.body);
-//     newJob.save().then(job => {
-//             return res.status(201).json(job);
-//         })
-//         .catch(err => {
-//             return res.json(err);
-//         });
-// }
-
 function createJob(req, res, next) {
     const result = v.validate(req.body, jobSchema);
     if (!result.valid) {

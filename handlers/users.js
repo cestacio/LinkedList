@@ -3,16 +3,6 @@ const Validator = require('jsonschema').Validator;
 const v = new Validator();
 const { userSchema } = require('../schemas');
 
-// function createUser(req, res, next) {
-//     const newUser = new User(req.body);
-//     newUser.save().then(user => {
-//             return res.status(201).json(user);
-//         })
-//         .catch(err => {
-//             return res.json(err);
-//         });
-// }
-
 function createUser(req, res, next) {
     const result = v.validate(req.body, userSchema);
     if (!result.valid) {

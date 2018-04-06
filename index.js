@@ -1,13 +1,19 @@
+// npm packages
 const express = require('express');
+const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const app = express();
-const PORT = 3000;
-
+// app imports
+let authHandler = require('./handlers/auth');
 let userRouters = require('./routers/users');
 let companyRouters = require('./routers/companies');
 let jobRouters = require('./routers/jobs');
+
+// globals
+dotenv.config();
+const app = express();
+const PORT = 3000;
 
 // database config
 mongoose.set('debug', true);
@@ -21,7 +27,10 @@ mongoose
         console.log(err);
     })
 
+// body parser setup
 app.use(bodyParser.json());
+
+app.post('/auth', authHandler);
 app.use('/users', userRouters);
 app.use('/companies', companyRouters);
 app.use('/jobs', jobRouters);
