@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./user');
 
 const companySchema = new mongoose.Schema({
     name: {
@@ -19,10 +18,7 @@ const companySchema = new mongoose.Schema({
         required: true
     },
     logo: String,
-    employees: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
+    employees: [{ type: String }],
     jobs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Job'
@@ -48,13 +44,19 @@ companySchema.statics = {
 };
 
 companySchema.post('findOneAndModify', company => {
-    User.findOneAndUpdate(company.user, { $addToSet: { companies: company._id } }).then(() => {
+    let User = mongoose.model('User');
+    User.findOneAndUpdate(company.user, { $addToSet: { company: company._id } }).then(() => {
         console.log('POST HOOK RAN');
     });
 });
 
 companySchema.post('findOneAndRemove', company => {
-    User.findOneAndUpdate(company.user, { $pull: { companies: company._id } }).then(() => {
+    let Job = mongoose.model('Job');
+    let User = mongoose.model('User');
+    User.updateMany({ currentCompany: company._id }, { currentCompany: null }).then(() => {
+        console.log('POST HOOK RAN');
+    })
+    Job.remove({ company: company._id }).then(() => {
         console.log('POST HOOK RAN');
     });
 });

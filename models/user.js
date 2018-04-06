@@ -41,13 +41,13 @@ const userSchema = new mongoose.Schema({
     experience: [{
         jobTitle: String,
         company: String,
-        startDate: Date, // ISO date-format timestamp
-        endDate: Date // ISO date-format timestamp
+        startDate: Date,
+        endDate: Date
     }],
     education: [{
         institution: String,
         degree: String,
-        endDate: Date // ISO date-format timestamp
+        endDate: Date
     }],
     skills: String
 }, {

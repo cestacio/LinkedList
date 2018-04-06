@@ -33,7 +33,7 @@ function readCompany(req, res, next) {
     return Company.findOne({
             handle: req.params.handle
         })
-        .populate('companies')
+        .populate('jobs')
         .exec()
         .then(company => {
             if (!company) {

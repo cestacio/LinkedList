@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Company = require('./company');
 
 const jobSchema = new mongoose.Schema({
     title: String,
@@ -19,9 +18,13 @@ jobSchema.statics = {
             if (jobId) {
                 throw new Error(`The jobId ${newJob.id} exists already.`);
             }
+            let Company = mongoose.model('Company');
             return newJob
                 .save()
-                .then(job => job)
+                .then(job => {
+                    return Company.findOneAndUpdate(job.company, { $addToSet: { jobs: job._id } }, { new: true });
+                })
+                .then(company => newJob)
                 .catch(err => {
                     return Promise.reject(err);
                 });
@@ -30,12 +33,14 @@ jobSchema.statics = {
 };
 
 jobSchema.post('findOneAndModify', job => {
+    let Company = mongoose.model('Company');
     Company.findOneAndUpdate(job.company, { $addToSet: { jobs: job._id } }).then(() => {
         console.log('POST HOOK RAN');
     });
 });
 
 jobSchema.post('findOneAndRemove', job => {
+    let Company = mongoose.model('Company');
     Company.findOneAndUpdate(job.company, { $pull: { jobs: job._id } }).then(() => {
         console.log('POST HOOK RAN');
     });
