@@ -1,13 +1,23 @@
 const mongoose = require('mongoose');
 
 const jobSchema = new mongoose.Schema({
-    title: String,
+    title: {
+        type: String,
+        required: true
+    },
     company: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Company'
+        ref: 'Company',
+        required: true
     },
-    salary: Number,
-    equity: Number // this is a float
+    salary: {
+        type: Number,
+        require: true
+    },
+    equity: {
+        type: Number,
+        require: true
+    }
 }, {
     timestamps: true
 });

@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const User = require('./user');
+const Job = require('./job');
+const bcrypt = require('bcrypt');
 
 const companySchema = new mongoose.Schema({
     name: {
@@ -41,6 +44,31 @@ companySchema.statics = {
                 });
         });
     }
+};
+
+companySchema.pre('save', function(next) {
+    const company = this;
+
+    if (!company.isModified('password')) {
+        return next();
+    }
+
+    bcrypt.hash(company.password, 10).then(
+        hashedPassword => {
+            company.password = hashedPassword;
+            return next();
+        },
+        err => next(err)
+    );
+});
+
+companySchema.methods.comparePassword = function(candidatePassword, next) {
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+        if (err) {
+            return next(err);
+        }
+        return next(null, isMatch);
+    });
 };
 
 companySchema.post('findOneAndModify', company => {

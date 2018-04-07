@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Company = require('./company');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -56,7 +57,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.statics = {
     createUser(newUser) {
-        return this.findOne({ name: newUser.username }).then(username => {
+        return this.findOne({ username: newUser.username }).then(username => {
             if (username) {
                 throw new Error(`The username ${newUser.username} exists already.`);
             }
@@ -66,10 +67,36 @@ userSchema.statics = {
                 .catch(err => {
                     return Promise.reject(err);
                 });
+        }).catch(err => {
+            return Promise.reject(err);
         });
     }
 };
 
+userSchema.pre('save', function(next) {
+    const user = this;
+
+    if (!user.isModified('password')) {
+        return next();
+    }
+
+    bcrypt.hash(user.password, 10).then(
+        hashedPassword => {
+            user.password = hashedPassword;
+            return next();
+        },
+        err => next(err)
+    );
+});
+
+userSchema.methods.comparePassword = function(candidatePassword, next) {
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+        if (err) {
+            return next(err);
+        }
+        return next(null, isMatch);
+    });
+};
 
 userSchema.post('findOneAndModify', user => {
     Company.findOneAndUpdate(user.company, { $addToSet: { users: user._id } }).then(() => {
