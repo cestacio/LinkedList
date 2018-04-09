@@ -1,21 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const { userAuth, ensureCorrectUser } = require('../helpers');
+const { auth } = require('../helpers');
 const { usersHandler } = require('../handlers');
 
+router
+  .route('')
+  .get(auth.ensureUserLoggedIn, usersHandler.readUsers)
+  .post(usersHandler.createUser);
+
+router.post('/user-auth', usersHandler.createUserToken);
 
 router
-    .route('')
-    .get(userAuth.userAuth, usersHandler.readUsers)
-    .post(usersHandler.createUser);
-
-router
-    .post('/user-auth', userAuth.userAuth);
-
-router
-    .route('/:username')
-    .get(userAuth.userAuth, usersHandler.readUser)
-    .patch(userAuth.userAuth, userAuth.ensureCorrectUser, usersHandler.updateUser)
-    .delete(userAuth.userAuth, userAuth.ensureCorrectUser, usersHandler.deleteUser);
+  .route('/:username')
+  .get(auth.ensureUserLoggedIn, usersHandler.readUser)
+  .patch(
+    auth.ensureUserLoggedIn,
+    auth.ensureCorrectUser,
+    usersHandler.updateUser
+  )
+  .delete(
+    auth.ensureUserLoggedIn,
+    auth.ensureCorrectUser,
+    usersHandler.deleteUser
+  );
 
 module.exports = router;

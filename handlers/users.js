@@ -1,12 +1,11 @@
 const { User } = require('../models');
 const Validator = require('jsonschema').Validator;
-const v = new Validator();
+const validator = new Validator();
 const { userSchema } = require('../schemas');
 const jwt = require('jsonwebtoken');
 const { ApiError } = require('../helpers');
 
-// create token
-function userToken(req, res, next) {
+function createUserToken(req, res, next) {
     return User.findOne({ username: req.body.username }).then(
         user => {
             if (!user) {
@@ -14,9 +13,11 @@ function userToken(req, res, next) {
             }
             return user.comparePassword(req.body.password, (err, isMatch) => {
                 if (isMatch) {
-                    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET_KEY, {
-                        expiresIn: 60 * 60
-                    });
+                    const token = jwt.sign({ username: user.username },
+                        process.env.JWT_SECRET_KEY, {
+                            expiresIn: 60 * 60
+                        }
+                    );
                     return res.json({
                         message: 'Authenticated!',
                         token
@@ -31,17 +32,19 @@ function userToken(req, res, next) {
 }
 
 function createUser(req, res, next) {
-    const result = v.validate(req.body, userSchema);
+    const result = validator.validate(req.body, userSchema);
     if (!result.valid) {
         const errors = result.errors.map(e => e.message).join(', ');
         return next({ message: errors });
     }
     return User.createUser(new User(req.body))
-        .then(user => res.json({ data: user })).catch(err => next(err));
+        .then(user => res.json({ data: user }))
+        .catch(err => next(err));
 }
 
 function readUsers(req, res, next) {
-    return User.find().then(users => {
+    return User.find()
+        .then(users => {
             return res.json({ data: users });
         })
         .catch(err => {
@@ -69,11 +72,18 @@ function readUser(req, res, next) {
 }
 
 function updateUser(req, res, next) {
+    const result = validator.validate(req.body, userSchema);
+    if (!result.valid) {
+        const errors = result.errors.map(e => e.message).join(', ');
+        return next({ message: errors });
+    }
     return User.findOneAndUpdate({
-            username: req.params.username
-        }, req.body, {
-            new: true
-        })
+                username: req.params.username
+            },
+            req.body, {
+                new: true
+            }
+        )
         .then(user => res.json({ data: user }))
         .catch(err => next(err));
 }
@@ -87,7 +97,7 @@ function deleteUser(req, res, next) {
 }
 
 module.exports = {
-    userToken,
+    createUserToken,
     createUser,
     readUsers,
     readUser,
