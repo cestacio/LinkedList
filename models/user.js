@@ -49,7 +49,17 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Company'
     },
-    photo: String,
+    photo: {
+      type: String,
+      validate: {
+        validator: function(validator) {
+          return /^((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif|bmp)$/.test(
+            validator
+          );
+        },
+        message: 'URL is not an Image! Try again.'
+      }
+    },
     experience: [
       {
         jobTitle: String,
@@ -89,11 +99,6 @@ userSchema.statics = {
       .catch(err => {
         return Promise.reject(err);
       });
-  },
-  updateUser(username, reqBody) {
-    return this.findOneAndUpdate({ username }, reqBody, { new: true }).then(
-      user => {}
-    );
   }
 };
 
