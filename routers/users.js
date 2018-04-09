@@ -10,7 +10,7 @@ router
     .post(usersHandler.createUser);
 
 router
-    .post('/user-auth', usersHandler.userToken);
+    .post('/user-auth', userAuth.userAuth);
 
 router
     .route('/:username')

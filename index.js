@@ -1,10 +1,8 @@
 // npm packages
-const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 
 // globals
 dotenv.config();
@@ -14,7 +12,6 @@ const app = express();
 app.use(bodyParser.json({ type: '*/*' }));
 
 const PORT = 3000;
-const { User, Company } = require('./models');
 
 // app imports
 let userRouters = require('./routers/users');
