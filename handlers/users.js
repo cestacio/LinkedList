@@ -5,6 +5,7 @@ const { userSchema } = require('../schemas');
 const jwt = require('jsonwebtoken');
 const { ApiError } = require('../helpers');
 
+// create token
 function userToken(req, res, next) {
     return User.findOne({ username: req.body.username }).then(
         user => {
