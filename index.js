@@ -22,13 +22,13 @@ let jobRouters = require('./routers/jobs');
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
 mongoose
-    .connect('mongodb://localhost/linkedlist')
-    .then(() => {
-        console.log('Successfully connected to the database!');
-    })
-    .catch(err => {
-        console.log(err);
-    })
+  .connect('mongodb://localhost/linkedlist')
+  .then(() => {
+    console.log('Successfully connected to the database!');
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 app.use('/users', userRouters);
 app.use('/companies', companyRouters);
@@ -36,11 +36,11 @@ app.use('/jobs', jobRouters);
 
 // error handler
 app.use((err, req, res, next) =>
-    res.status(err.status || 500).json({
-        message: err.message || 'Internal Server Error'
-    })
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal Server Error'
+  })
 );
 
 app.listen(PORT, () => {
-    console.log(`LinkedList API is listening on port ${PORT}`);
+  console.log(`LinkedList API is listening on port ${PORT}`);
 });

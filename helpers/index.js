@@ -1,2 +1,2 @@
 exports.ApiError = require('./ApiError');
-exports.userAuth = require('./userAuth');
+exports.auth = require('./auth');
