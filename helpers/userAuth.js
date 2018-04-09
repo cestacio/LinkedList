@@ -5,7 +5,6 @@ const JWT_SECRET_KEY = 'VERY_SECRET_CODE';
 
 // auth required
 function userAuth(req, res, next) {
-    console.log('hello');
     try {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, JWT_SECRET_KEY);

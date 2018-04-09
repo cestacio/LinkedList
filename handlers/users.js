@@ -3,6 +3,7 @@ const Validator = require('jsonschema').Validator;
 const v = new Validator();
 const { userSchema } = require('../schemas');
 const jwt = require('jsonwebtoken');
+const { ApiError } = require('../helpers');
 
 function userToken(req, res, next) {
     return User.findOne({ username: req.body.username }).then(
@@ -40,8 +41,11 @@ function createUser(req, res, next) {
 
 function readUsers(req, res, next) {
     return User.find().then(users => {
-        return res.json({ data: users });
-    });
+            return res.json({ data: users });
+        })
+        .catch(err => {
+            return next(new ApiError());
+        });
 }
 
 function readUser(req, res, next) {
