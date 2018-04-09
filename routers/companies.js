@@ -9,6 +9,10 @@ router
     .post(companiesHandler.createCompany);
 
 router
+    .route('/company-auth')
+    .post(companiesHandler.companyToken);
+
+router
     .route('/:handle')
     .get(companiesHandler.readCompany)
     .patch(companiesHandler.updateCompany)

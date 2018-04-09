@@ -2,6 +2,31 @@ const { User } = require('../models');
 const Validator = require('jsonschema').Validator;
 const v = new Validator();
 const { userSchema } = require('../schemas');
+const jwt = require('jsonwebtoken');
+
+function userToken(req, res, next) {
+    return User.findOne({ username: req.body.username }).then(
+        user => {
+            if (!user) {
+                return res.status(401).json({ message: 'Invalid Credentials' });
+            }
+            return user.comparePassword(req.body.password, (err, isMatch) => {
+                if (isMatch) {
+                    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET_KEY, {
+                        expiresIn: 60 * 60
+                    });
+                    return res.json({
+                        message: 'Authenticated!',
+                        token
+                    });
+                } else {
+                    return res.status(401).json({ message: 'Invalid Credentials' });
+                }
+            });
+        },
+        err => next(err)
+    );
+}
 
 function createUser(req, res, next) {
     const result = v.validate(req.body, userSchema);
@@ -57,6 +82,7 @@ function deleteUser(req, res, next) {
 }
 
 module.exports = {
+    userToken,
     createUser,
     readUsers,
     readUser,

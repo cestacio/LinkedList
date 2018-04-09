@@ -2,6 +2,32 @@ const { Company } = require('../models');
 const Validator = require('jsonschema').Validator;
 const v = new Validator();
 const { companySchema } = require('../schemas');
+const jwt = require('jsonwebtoken');
+
+function companyToken(req, res, next) {
+    return Company.findOne({ handle: req.body.handle }).then(
+        company => {
+            console.log('COMPANY', company);
+            if (!company) {
+                return res.status(401).json({ message: 'Invalid Credentials' });
+            }
+            return company.comparePassword(req.body.password, (err, isMatch) => {
+                if (isMatch) {
+                    const token = jwt.sign({ handle: company.handle }, process.env.JWT_SECRET_KEY, {
+                        expiresIn: 60 * 60 // expire in one hour
+                    });
+                    return res.json({
+                        message: 'Authenticated!',
+                        token
+                    });
+                } else {
+                    return res.status(401).json({ message: 'Invalid Credentials' });
+                }
+            });
+        },
+        err => next(err)
+    );
+}
 
 function createCompany(req, res, next) {
     const result = v.validate(req.body, companySchema);
@@ -65,6 +91,7 @@ function deleteCompany(req, res, next) {
 }
 
 module.exports = {
+    companyToken,
     createCompany,
     readCompanies,
     readCompany,
