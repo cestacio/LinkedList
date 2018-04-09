@@ -1,21 +1,27 @@
 const express = require('express');
 const router = express.Router();
-
+const { auth } = require('../helpers');
 const { companiesHandler } = require('../handlers');
 
 router
-    .route('')
-    .get(companiesHandler.readCompanies)
-    .post(companiesHandler.createCompany);
+  .route('')
+  .get(auth.ensureCompanyLoggedIn, companiesHandler.readCompanies)
+  .post(companiesHandler.createCompany);
+
+router.post('/company-auth', companiesHandler.createCompanyToken);
 
 router
-    .route('/company-auth')
-    .post(companiesHandler.companyToken);
-
-router
-    .route('/:handle')
-    .get(companiesHandler.readCompany)
-    .patch(companiesHandler.updateCompany)
-    .delete(companiesHandler.deleteCompany);
+  .route('/:handle')
+  .get(auth.ensureCompanyLoggedIn, companiesHandler.readCompany)
+  .patch(
+    auth.ensureCompanyLoggedIn,
+    auth.ensureCorrectCompany,
+    companiesHandler.updateCompany
+  )
+  .delete(
+    auth.ensureCompanyLoggedIn,
+    auth.ensureCorrectCompany,
+    companiesHandler.deleteCompany
+  );
 
 module.exports = router;
