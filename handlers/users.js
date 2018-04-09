@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const Validator = require('jsonschema').Validator;
-const v = new Validator();
+const validator = new Validator();
 const { userSchema } = require('../schemas');
 const jwt = require('jsonwebtoken');
 const { ApiError } = require('../helpers');
@@ -34,7 +34,7 @@ function createUserToken(req, res, next) {
 }
 
 function createUser(req, res, next) {
-  const result = v.validate(req.body, userSchema);
+  const result = validator.validate(req.body, userSchema);
   if (!result.valid) {
     const errors = result.errors.map(e => e.message).join(', ');
     return next({ message: errors });
@@ -74,6 +74,11 @@ function readUser(req, res, next) {
 }
 
 function updateUser(req, res, next) {
+  const result = validator.validate(req.body, userSchema);
+  if (!result.valid) {
+    const errors = result.errors.map(e => e.message).join(', ');
+    return next({ message: errors });
+  }
   return User.findOneAndUpdate(
     {
       username: req.params.username

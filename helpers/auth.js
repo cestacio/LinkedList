@@ -55,7 +55,7 @@ function ensureCorrectCompany(req, res, next) {
   try {
     var token = req.headers.authorization.split(' ')[1];
     jwt.verify(token, process.env.JWT_SECRET_KEY, function(err, decoded) {
-      if (decoded.handle === req.params.username) {
+      if (decoded.handle === req.params.handle) {
         return next();
       } else {
         return next(new ApiError(401, 'Unauthorized', 'Invalid auth token'));
@@ -68,5 +68,7 @@ function ensureCorrectCompany(req, res, next) {
 
 module.exports = {
   ensureUserLoggedIn,
-  ensureCorrectUser
+  ensureCorrectUser,
+  ensureCompanyLoggedIn,
+  ensureCorrectCompany
 };

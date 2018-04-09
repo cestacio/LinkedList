@@ -1,6 +1,6 @@
 const { Company } = require('../models');
 const Validator = require('jsonschema').Validator;
-const v = new Validator();
+const validator = new Validator();
 const { companySchema } = require('../schemas');
 const jwt = require('jsonwebtoken');
 
@@ -33,7 +33,7 @@ function createCompanyToken(req, res, next) {
 }
 
 function createCompany(req, res, next) {
-  const result = v.validate(req.body, companySchema);
+  const result = validator.validate(req.body, companySchema);
   if (!result.valid) {
     const errors = result.errors.map(e => e.message).join(', ');
     return next({ message: errors });
@@ -71,7 +71,7 @@ function readCompany(req, res, next) {
 }
 
 function updateCompany(req, res, next) {
-  const result = v.validate(req.body, companySchema);
+  const result = validator.validate(req.body, companySchema);
   if (!result.valid) {
     const errors = result.errors.map(e => e.message).join(', ');
     return next({ message: errors });
