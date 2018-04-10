@@ -22,7 +22,7 @@ let jobRouters = require('./routers/jobs');
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
 mongoose
-  .connect(process.env.MONGODB_URL || 'mongodb://localhost/linkedlist')
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log('Successfully connected to the database!');
   })
