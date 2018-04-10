@@ -11,7 +11,7 @@ const app = express();
 // body parser setup
 app.use(bodyParser.json({ type: '*/*' }));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // app imports
 let userRouters = require('./routers/users');
@@ -22,7 +22,7 @@ let jobRouters = require('./routers/jobs');
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/linkedlist')
+  .connect(process.env.MONGODB_URL || 'mongodb://localhost/linkedlist')
   .then(() => {
     console.log('Successfully connected to the database!');
   })
