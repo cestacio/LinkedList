@@ -29,7 +29,7 @@ mongoose
   .catch(err => {
     console.log(err);
   });
-
+app.get('/users');
 app.use('/users', userRouters);
 app.use('/companies', companyRouters);
 app.use('/jobs', jobRouters);
