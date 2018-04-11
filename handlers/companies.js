@@ -82,7 +82,8 @@ function updateCompany(req, res, next) {
     },
     req.body,
     {
-      new: true
+      new: true,
+      runValidators: true
     }
   )
     .then(company => res.json({ data: company }))

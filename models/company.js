@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./user');
 const Job = require('./job');
-const Validator = require('jsonschema').Validator;
-const validator = new Validator();
 const bcrypt = require('bcrypt');
 
 const companySchema = new mongoose.Schema(
@@ -31,7 +29,17 @@ const companySchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    logo: String,
+    logo: {
+      type: String,
+      validate: {
+        validator: function(validator) {
+          return /^((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif|bmp)$/.test(
+            validator
+          );
+        },
+        message: 'URL is not an Image! Try again.'
+      }
+    },
     employees: [{ type: String }],
     jobs: [
       {
