@@ -11,7 +11,7 @@ const app = express();
 // body parser setup
 app.use(bodyParser.json({ type: '*/*' }));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // app imports
 let userRouters = require('./routers/users');
@@ -22,14 +22,14 @@ let jobRouters = require('./routers/jobs');
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/linkedlist')
+  .connect(process.env.MONGODB_URI || 'mongodb://localhost/linkedlist')
   .then(() => {
     console.log('Successfully connected to the database!');
   })
   .catch(err => {
     console.log(err);
   });
-
+app.get('/', (req, res, next) => res.send('THE LINKED LIST API INC.'));
 app.use('/users', userRouters);
 app.use('/companies', companyRouters);
 app.use('/jobs', jobRouters);
