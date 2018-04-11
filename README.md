@@ -19,12 +19,12 @@ Full interactive API documentation available here:
 
 ## Development
 
-### Prerequisites to Running Locally
+## Prerequisites to Running Locally
 1. Install Node
 2. Install MongoDB
 3. Install nodemon globally
 
-### How to Run Locally
+## How to Run Locally
 fork this repository: https://github.com/cestacio/LinkedList
 1. `npm install`
 2. In a new tab, `mongod` (unless it's already running)
@@ -34,7 +34,7 @@ Sever runs on http://localhost:3000 by default.
 
 You can also pass any enviornment variables in a `.env` file. 
 
-### Notes on Data Model
+## Notes on Data Model
 
 We have three main resources: **User**, **Company**, and **Job**. 
 
