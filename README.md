@@ -40,7 +40,7 @@ We have three main resources: **User**, **Company**, and **Job**.
 
 1. `Company` can have many jobs.
 
-Company `jobs` exist as arrays of [Mongoose reds which are populated](http://mongoosejs.com/docs/populate.html) in the retrieval methods.
+Company `jobs` exist as arrays of [Mongoose refs which are populated](http://mongoosejs.com/docs/populate.html) in the retrieval methods.
 
 2. `Job` can only have one company. 
 
