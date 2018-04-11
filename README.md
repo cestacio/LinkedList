@@ -4,6 +4,7 @@ LinkedIn/AngelList type of clone.
 
 ## Backend
 Backend API built by Charmaine Estacio and Kelson Warner 
+
 Link to API [here](https://thelinkedlist.herokuapp.com/)
 
 1.  (_Technical_) - The backend should be a fully RESTful API using JSON.
