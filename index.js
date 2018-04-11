@@ -29,7 +29,7 @@ mongoose
   .catch(err => {
     console.log(err);
   });
-app.get('/users', (req, res, next) => res.send('THE LINKED LIST API INC.'));
+app.get('/', (req, res, next) => res.send('THE LINKED LIST API INC.'));
 app.use('/users', userRouters);
 app.use('/companies', companyRouters);
 app.use('/jobs', jobRouters);
