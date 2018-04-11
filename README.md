@@ -5,7 +5,7 @@ LinkedIn/AngelList type of clone.
 - The backend is be a fully RESTful API using JSON.
 - The server is in Node.js and Express.js, and the database must be MongoDB.
 
-Built by Charmaine Estacio and Kelson Warner. 
+Built by [Charmaine Estacio](https://github.com/cestacio) and [Kelson Warner](https://github.com/kelsonpw). 
 
 ## Live URL
 
