@@ -22,14 +22,18 @@ let jobRouters = require('./routers/jobs');
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
 mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://localhost/linkedlist')
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Successfully connected to the database!');
   })
   .catch(err => {
     console.log(err);
   });
-app.get('/', (req, res, next) => res.send('THE LINKED LIST API INC.'));
+app.get('/', (req, res, next) =>
+  res.send(
+    'THE LINKED LIST API. Read about our JSON API here: <a href="https://linkedlist.docs.apiary.io/">https://linkedlist.docs.apiary.io/</a>'
+  )
+);
 app.use('/users', userRouters);
 app.use('/companies', companyRouters);
 app.use('/jobs', jobRouters);

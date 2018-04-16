@@ -6,8 +6,7 @@ require('dotenv').config();
 function ensureUserLoggedIn(req, res, next) {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const decoded = jwtDecode(token);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     console.log('DECODED', decoded);
 
     if (!decoded.username) {
@@ -37,8 +36,7 @@ function ensureCorrectUser(req, res, next) {
 function ensureCompanyLoggedIn(req, res, next) {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const decoded = jwtDecode(token);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     console.log('DECODED', decoded);
 
     if (!decoded.handle) {
@@ -52,6 +50,7 @@ function ensureCompanyLoggedIn(req, res, next) {
 
 function ensureCorrectCompany(req, res, next) {
   try {
+    // bearer token comment
     var token = req.headers.authorization.split(' ')[1];
     jwt.verify(token, process.env.JWT_SECRET_KEY, function(err, decoded) {
       if (decoded.handle === req.params.handle) {
@@ -69,8 +68,7 @@ function ensureCorrectCompany(req, res, next) {
 function ensureGeneralLoggedIn(req, res, next) {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const decoded = jwtDecode(token);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     console.log('DECODED', decoded);
 
     if (decoded.handle || decoded.username) {
